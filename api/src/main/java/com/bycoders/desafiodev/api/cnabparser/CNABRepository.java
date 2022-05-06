@@ -1,11 +1,9 @@
 package com.bycoders.desafiodev.api.cnabparser;
 
-import java.util.Collection;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CNABRepository {
+public interface CNABRepository extends JpaRepository<CNAB, Long> {
 	
-	Collection<CNAB> save(Collection<CNAB> transactions);
 } 

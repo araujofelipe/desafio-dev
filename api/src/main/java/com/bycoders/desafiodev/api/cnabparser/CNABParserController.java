@@ -12,7 +12,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -29,10 +31,10 @@ public class CNABParserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Collection<CNAB>> parserAndSave() throws IOException {
-		Set<String> fromInputStream = Util.fromInputStream(resourceLoader.getResource("classpath:CNAB.txt").getInputStream());
+	public ResponseEntity<Collection<CNAB>> parserAndSave(@RequestParam("file") MultipartFile file) throws IOException {
+		Set<String> fromInputStream = Util.fromInputStream(file.getInputStream());
 		Set<CNAB> transactions = new HashSet<>();
 		fromInputStream.stream().forEach(line -> transactions.add(CNAB.from(line)));
-		return ResponseEntity.ok(service.save(transactions));
+		return ResponseEntity.ok(service.saveAll(transactions));
 	}
 }

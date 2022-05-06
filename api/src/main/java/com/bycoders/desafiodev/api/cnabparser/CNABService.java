@@ -13,7 +13,7 @@ public class CNABService {
 		this.repository = repository;
 	}
 	
-	public Collection<CNAB> save(Collection<CNAB> transactions) {
-		return repository.save(transactions);
+	public Collection<CNAB> saveAll(Collection<CNAB> transactions) {
+		return repository.saveAll(transactions);
 	}
 }

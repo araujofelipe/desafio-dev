@@ -5,9 +5,13 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
@@ -16,13 +20,25 @@ import lombok.NoArgsConstructor;
 @Entity
 class CNAB {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Getter
 	Type type;
+	@Getter
 	LocalDate date;
+	@Getter
 	Double value;
+	@Getter
 	String cpf;
+	@Getter
 	String card;
+	@Getter
 	LocalTime hour;
+	@Getter
 	String owner;
+	@Getter
 	String store;
 	
 	public static CNAB from(String line) {
