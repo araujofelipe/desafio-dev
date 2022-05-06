@@ -5,7 +5,10 @@ import static com.bycoders.desafiodev.api.common.ConstantsConfig.PATH_API_V1;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -31,10 +34,12 @@ public class CNABParserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Collection<CNAB>> parserAndSave(@RequestParam("file") MultipartFile file) throws IOException {
+	public ResponseEntity<Map<String, List<CNAB>>> parserAndSave(@RequestParam("file") MultipartFile file) throws IOException {
 		Set<String> fromInputStream = Util.fromInputStream(file.getInputStream());
 		Set<CNAB> transactions = new HashSet<>();
 		fromInputStream.stream().forEach(line -> transactions.add(CNAB.from(line)));
-		return ResponseEntity.ok(service.saveAll(transactions));
+		Collection<CNAB> all = service.saveAll(transactions);
+		Map<String, List<CNAB>> collect = all.stream().collect(Collectors.groupingBy(CNAB::getStore));
+		return ResponseEntity.ok(collect);
 	}
 }

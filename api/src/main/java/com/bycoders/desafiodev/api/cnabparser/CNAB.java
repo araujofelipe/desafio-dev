@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -79,5 +80,14 @@ class CNAB {
 
 	private static String readField(int start, int end, String reg) {
 		return reg.substring(start, end);
+	}
+	
+	@PrePersist
+	private void normalize() {
+		if(getType().sign.equals("-")) {
+			value = value*-1;
+		}
+		store = store.trim();
+		owner = owner.trim();
 	}
 }
