@@ -1,0 +1,12 @@
+version: "3.0" 
+services:
+  bycoders-cnab:
+    image: api
+    container_name: api
+    environment:
+      - SPRING_PROFILES_INCLUDE=no-liquibase
+      - SPRING_JPA_DATASOURCE_URL=jdbc:postgresql://ec2-3-225-213-67.compute-1.amazonaws.com:5432/dehvkvegbfkd25
+      - SPRING_JPA_DATASOURCE_USERNAME=ikfpailfxedjql
+      - SPRING_JPA_DATASOURCE_PASSWORD=f7a4e838e7729dfa5e3c517c9e3e264e5906cbc6b21eaedb8cdf0a9a9c50113c
+    ports:
+      - 8080:8080
